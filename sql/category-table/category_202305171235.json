@@ -1,0 +1,80 @@
+{
+	"category": [
+		{
+			"id": "100",
+			"name": "Cereais e leguminosas"
+		},
+		{
+			"id": "101",
+			"name": "Hortaliças tuberosas"
+		},
+		{
+			"id": "102",
+			"name": "Farinhas, féculas e massas"
+		},
+		{
+			"id": "103",
+			"name": "Cocos, castanhas e nozes "
+		},
+		{
+			"id": "104",
+			"name": "Hortaliças folhosas, frutosas e outras "
+		},
+		{
+			"id": "105",
+			"name": "Frutas"
+		},
+		{
+			"id": "106",
+			"name": "Açúcares e produtos de confeitaria  "
+		},
+		{
+			"id": "107",
+			"name": "Sais e condimentos "
+		},
+		{
+			"id": "108",
+			"name": "Carnes e vísceras"
+		},
+		{
+			"id": "109",
+			"name": "Pescados e frutos do mar "
+		},
+		{
+			"id": "110",
+			"name": "Enlatados e conservas "
+		},
+		{
+			"id": "111",
+			"name": "Aves e ovos   "
+		},
+		{
+			"id": "112",
+			"name": "Laticínios "
+		},
+		{
+			"id": "113",
+			"name": "Panificados "
+		},
+		{
+			"id": "114",
+			"name": "Carnes industrializadas "
+		},
+		{
+			"id": "115",
+			"name": "Bebidas não alcoólicas e infusões "
+		},
+		{
+			"id": "116",
+			"name": "Bebidas alcoólicas "
+		},
+		{
+			"id": "117",
+			"name": "Óleos e gorduras "
+		},
+		{
+			"id": "118",
+			"name": "Miscelâneas "
+		}
+	]
+}

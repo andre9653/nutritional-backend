@@ -1,4 +1,12 @@
-# Projeto pessoal de um backend para consultas de alimentos e suas informações nutricionais.
+# Projeto pessoal de um backend para consultas de alimentos e suas informações nutricionais
+
+## Tecnologias utilizadas
+
+- [Node.js](https://nodejs.org/en/)
+- [Docker](https://www.docker.com/)
+- [MySQL](https://www.mysql.com/)
+- [Prisma](https://www.prisma.io/)
+- [NestJS](https://nestjs.com/)
 
 ## Instalação do banco de dados
 
@@ -35,3 +43,5 @@ sudo docker inspect mysql-name | grep IPAddress
 ```
 
 O IP do container deve ser setado no arquivo `.env` de acordo com o arquivo `.env.example`.
+
+Na pasta `sql` contem os arquivos para popular o banco de dados. Para isso, execute o comando:
