@@ -45,3 +45,24 @@ sudo docker inspect mysql-name | grep IPAddress
 O IP do container deve ser setado no arquivo `.env` de acordo com o arquivo `.env.example`.
 
 Na pasta `sql` contem os arquivos para popular o banco de dados. Para isso, execute o comando:
+
+## Projeto
+
+## Instalação
+
+```bash
+yarn install
+```
+
+## Running the app
+
+```bash
+# development
+yarn run start
+
+# watch mode
+yarn run start:dev
+
+# production mode
+yarn run start:prod
+```
