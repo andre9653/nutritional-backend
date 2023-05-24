@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model category {
+  id               String             @id
+  name             String
+  food             food[]
+  nutritional_data nutritional_data[]
+}
+
+model food {
+  id               String             @id
+  name             String
+  categoryId       String
+  category         category           @relation(fields: [categoryId], references: [id])
+  nutritional_data nutritional_data[]
+}
+
+model preparation {
+  id               String             @id
+  name             String
+  nutritional_data nutritional_data[]
+}
+
+model nutritional_data {
+  id                          String      @id @default(uuid())
+  foodId                      String
+  categoryId                  String
+  preparationId               String
+  energy                      Float       @default(0) // Energia (kcal)
+  protein                     Float       @default(0) // Proteína (g)
+  total_fat                   Float       @default(0) // Lipídios totais (g)
+  carbohydrate                Float       @default(0) // Carboidrato (g)
+  total_dietary_fiber         Float       @default(0) // Fibra alimentar total (g)
+  cholesterol                 Float       @default(0) // Colesterol (mg)
+  saturated_fatty_acids       Float       @default(0) // AG Saturados (g)
+  monounsaturated_fatty_acids Float       @default(0) // AG Mono (g)
+  polyunsaturated_fatty_acids Float       @default(0) // AG Poli (g)
+  linoleic_acid               Float       @default(0) // AG Linoléico (g)
+  linolenic_acid              Float       @default(0) // AG Linolênico (g)
+  trans_fatty_acids           Float       @default(0) // AG Trans total(g)
+  sugar                       Float       @default(0) // Açúcar total (g)
+  added_sugar                 Float       @default(0) // Açúcar de adição (g)
+  calcium                     Float       @default(0) // Cálcio (mg)
+  magnesium                   Float       @default(0) // Magnésio (mg)
+  manganese                   Float       @default(0) // Manganês (mg)
+  phosphorus                  Float       @default(0) // Fósforo (mg)
+  iron                        Float       @default(0) // Ferro (mg)
+  sodium                      Float       @default(0) // Sódio (mg)
+  added_sodium                Float       @default(0) // Sódio de adição (mg)
+  potassium                   Float       @default(0) // Potássio (mg)
+  copper                      Float       @default(0) // Cobre (mg)
+  zinc                        Float       @default(0) // Zinco (mg)
+  selenium                    Float       @default(0) // Selênio (mcg)
+  food                        food        @relation(fields: [foodId], references: [id])
+  category                    category    @relation(fields: [categoryId], references: [id])
+  preparation                 preparation @relation(fields: [preparationId], references: [id])
+}
+
+model nutritional_types {
+  id    String @id @default(uuid())
+  name  String
+  alias String
+}
