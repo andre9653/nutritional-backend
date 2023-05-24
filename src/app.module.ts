@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-interface EnvironmentVariables {
-  PORT: number;
-  TIMEOUT: string;
-}
+import { PrismaService } from './prisma.service';
+import { CategoryController } from './app/category/category.controller';
+import { CategoryService } from './app/category/category.service';
 
 @Module({
   imports: [
@@ -14,7 +13,7 @@ interface EnvironmentVariables {
       isGlobal: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, CategoryController],
+  providers: [AppService, PrismaService, CategoryService],
 })
 export class AppModule {}
