@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class FindAllCategoriesDto {
   @ApiProperty({
@@ -19,4 +19,14 @@ export class FindAllCategoriesDto {
   })
   @IsOptional()
   offset?: number;
+}
+
+export class FindOneCategoryDto {
+  @ApiProperty({
+    required: true,
+    type: String,
+    description: 'Id of category',
+  })
+  @IsNotEmpty()
+  id: string;
 }

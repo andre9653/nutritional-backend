@@ -10,7 +10,7 @@ import {
 import { Prisma } from '@prisma/client';
 import { Pagination } from 'src/utils/Pagination';
 import { CategoryService } from './category.service';
-import { FindAllCategoriesDto } from './category.dto';
+import { FindAllCategoriesDto, FindOneCategoryDto } from './category.dto';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('category')
@@ -42,8 +42,8 @@ export class CategoryController {
   }
 
   @Get(':id')
-  findOne(): string {
-    return 'This action returns a #${id} category';
+  findOne(@Query() { id }: FindOneCategoryDto) {
+    return this.category.findOne(id);
   }
 
   @Get('search/:query')

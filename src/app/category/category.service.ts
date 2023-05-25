@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { CategoryModel } from 'src/model/modelsType';
 import { PrismaService } from 'src/prisma.service';
@@ -7,7 +7,15 @@ import { PrismaService } from 'src/prisma.service';
 export class CategoryService {
   constructor(private prisma: PrismaService) {}
 
-  findAll(query: Prisma.categoryFindManyArgs): Promise<CategoryModel[]> {
-    return this.prisma.category.findMany(query);
+  findAll(pagination: Prisma.categoryFindManyArgs): Promise<CategoryModel[]> {
+    return this.prisma.category.findMany({ ...pagination });
+  }
+
+  async findOne(id: string) {
+    const category = await this.prisma.category.findUnique({ where: { id } });
+    if (!category) {
+      throw new NotFoundException();
+    }
+    return category;
   }
 }
