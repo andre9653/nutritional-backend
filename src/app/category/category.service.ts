@@ -18,4 +18,12 @@ export class CategoryService {
     }
     return category;
   }
+
+  async searchByName(name: string) {
+    const category = await this.prisma.category.findMany({ where: { name } });
+    if (!category) {
+      throw new NotFoundException();
+    }
+    return category;
+  }
 }

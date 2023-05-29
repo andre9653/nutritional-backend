@@ -1,3 +1,4 @@
+import { type CategoryModel } from 'src/model/modelsType';
 import {
   Controller,
   Delete,
@@ -11,9 +12,10 @@ import { Prisma } from '@prisma/client';
 import { Pagination } from 'src/utils/Pagination';
 import { CategoryService } from './category.service';
 import { FindAllCategoriesDto, FindOneCategoryDto } from './category.dto';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('category')
+@ApiTags('Category')
 export class CategoryController {
   constructor(private category: CategoryService) {}
 
@@ -28,9 +30,20 @@ export class CategoryController {
 
   @Get()
   @HttpCode(200)
+  @ApiOperation({ summary: 'Get all categories' })
   @ApiOkResponse({
     description: 'List of categories',
     isArray: true,
+    schema: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          name: { type: 'string' },
+        },
+      },
+    },
   })
   findAll(@Query() { limit, offset }: FindAllCategoriesDto) {
     const pagination = new Pagination({ limit, offset });
@@ -42,11 +55,39 @@ export class CategoryController {
   }
 
   @Get(':id')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Get category by id' })
+  @ApiOkResponse({
+    description: 'Category',
+    schema: {
+      type: 'object',
+      properties: {
+        id: { type: 'string' },
+        name: { type: 'string' },
+      },
+    },
+  })
   findOne(@Query() { id }: FindOneCategoryDto) {
     return this.category.findOne(id);
   }
 
   @Get('search/:query')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Get category by query' })
+  @ApiOkResponse({
+    description: 'Category',
+    isArray: true,
+    schema: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          name: { type: 'string' },
+        },
+      },
+    },
+  })
   findQuery(): string {
     return 'This action returns a category by query';
   }
