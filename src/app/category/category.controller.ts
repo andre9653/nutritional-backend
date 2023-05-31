@@ -17,6 +17,13 @@ import {
 } from './category.dto';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CategoryCreate } from './category.body';
+import {
+  createDoc,
+  findAllDoc,
+  findOneDoc,
+  findQueryDoc,
+} from './category.doc';
+import { StatusCodes } from 'src/utils/constantes';
 
 @Controller('category')
 @ApiTags('Category')
@@ -24,22 +31,9 @@ export class CategoryController {
   constructor(private category: CategoryService) {}
 
   @Get()
-  @HttpCode(200)
+  @HttpCode(StatusCodes.OK)
   @ApiOperation({ summary: 'Get all categories' })
-  @ApiOkResponse({
-    description: 'List of categories',
-    isArray: true,
-    schema: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: { type: 'string' },
-          name: { type: 'string' },
-        },
-      },
-    },
-  })
+  @ApiOkResponse(findAllDoc)
   findAll(@Query() { limit, offset }: FindAllCategoriesDto) {
     const pagination = new Pagination({ limit, offset });
 
@@ -47,39 +41,17 @@ export class CategoryController {
   }
 
   @Get(':id')
-  @HttpCode(200)
+  @HttpCode(StatusCodes.OK)
   @ApiOperation({ summary: 'Get category by id' })
-  @ApiOkResponse({
-    description: 'Category',
-    schema: {
-      type: 'object',
-      properties: {
-        id: { type: 'string' },
-        name: { type: 'string' },
-      },
-    },
-  })
+  @ApiOkResponse(findOneDoc)
   findOne(@Query() { id }: FindOneCategoryDto) {
     return this.category.findOne(id);
   }
 
   @Get('search/:query')
-  @HttpCode(200)
+  @HttpCode(StatusCodes.OK)
   @ApiOperation({ summary: 'Get category by query' })
-  @ApiOkResponse({
-    description: 'Category',
-    isArray: true,
-    schema: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: { type: 'string' },
-          name: { type: 'string' },
-        },
-      },
-    },
-  })
+  @ApiOkResponse(findQueryDoc)
   findQuery(@Query() { query, limit, offset }: SearchCategory) {
     const pagination = new Pagination({ limit, offset });
 
@@ -89,20 +61,7 @@ export class CategoryController {
   @Post()
   @HttpCode(201)
   @ApiOperation({ summary: 'Create a new category' })
-  @ApiOkResponse({
-    description: 'Category',
-    schema: {
-      type: 'object',
-      properties: {
-        id: { type: 'string' },
-        name: { type: 'string' },
-      },
-      example: {
-        id: '1',
-        name: 'Category 1',
-      },
-    },
-  })
+  @ApiOkResponse(createDoc)
   create(@Body() body: CategoryCreate) {
     return this.category.create(body);
   }
