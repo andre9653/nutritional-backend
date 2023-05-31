@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma.service';
 import { CategoryController } from './app/category/category.controller';
 import { CategoryService } from './app/category/category.service';
+import { SearchService } from './app/shared/search.service';
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { CategoryService } from './app/category/category.service';
     }),
   ],
   controllers: [AppController, CategoryController],
-  providers: [AppService, PrismaService, CategoryService],
+  providers: [AppService, PrismaService, CategoryService, SearchService],
 })
 export class AppModule {}

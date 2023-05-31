@@ -1,5 +1,5 @@
-import { type CategoryModel } from 'src/model/modelsType';
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -8,25 +8,20 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { Pagination } from 'src/utils/Pagination';
 import { CategoryService } from './category.service';
-import { FindAllCategoriesDto, FindOneCategoryDto } from './category.dto';
+import {
+  FindAllCategoriesDto,
+  FindOneCategoryDto,
+  SearchCategory,
+} from './category.dto';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CategoryCreate } from './category.body';
 
 @Controller('category')
 @ApiTags('Category')
 export class CategoryController {
   constructor(private category: CategoryService) {}
-
-  private applyPagination(
-    query: Prisma.categoryFindManyArgs,
-    pagination: Pagination,
-  ): Prisma.categoryFindManyArgs {
-    query.take = pagination.limit;
-    query.skip = pagination.offset;
-    return query;
-  }
 
   @Get()
   @HttpCode(200)
@@ -47,11 +42,8 @@ export class CategoryController {
   })
   findAll(@Query() { limit, offset }: FindAllCategoriesDto) {
     const pagination = new Pagination({ limit, offset });
-    const query: Prisma.categoryFindManyArgs = {};
 
-    this.applyPagination(query, pagination);
-
-    return this.category.findAll(query);
+    return this.category.findAll(pagination);
   }
 
   @Get(':id')
@@ -88,13 +80,31 @@ export class CategoryController {
       },
     },
   })
-  findQuery(): string {
-    return 'This action returns a category by query';
+  findQuery(@Query() { query, limit, offset }: SearchCategory) {
+    const pagination = new Pagination({ limit, offset });
+
+    return this.category.searchByProximity(query, pagination);
   }
 
   @Post()
-  create(): string {
-    return 'This action adds a new category';
+  @HttpCode(201)
+  @ApiOperation({ summary: 'Create a new category' })
+  @ApiOkResponse({
+    description: 'Category',
+    schema: {
+      type: 'object',
+      properties: {
+        id: { type: 'string' },
+        name: { type: 'string' },
+      },
+      example: {
+        id: '1',
+        name: 'Category 1',
+      },
+    },
+  })
+  create(@Body() body: CategoryCreate) {
+    return this.category.create(body);
   }
 
   @Put(':id')
